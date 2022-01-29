@@ -1,0 +1,5 @@
+# md5, sha256 from https://pypi.org/pypi/zlmdb/json
+md5  d2aefaf178185f6cd4db11ca0109d1d2  zlmdb-22.1.2.tar.gz
+sha256  2269ed308288ac2614042ac6d2aa8d3450f4696b933af60ef620ab001703a33a  zlmdb-22.1.2.tar.gz
+# Locally computed sha256 checksums
+sha256  8a139bf325dcca11e0e476ce537bf791a6cfbeed8899a9b6ddc55238e180d230  LICENSE
