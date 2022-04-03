@@ -1,0 +1,57 @@
+Remove the upper limit for idna, which is an indirect dependency via
+twisted[tls] and treq->requests. This upper limit conflicts with the
+python-idna v3.3 package bundled with buildroot. The idna requirement for
+twisted v20.3.0 is idna>=0.6,!=2.3 , and for requests it's
+idna>=2.5,<4;python_version>="3" .
+
+Remove the upper limit for urllib3, which is an indirect dependency via
+treq->requests. This upper limit conflicts with the python-urllib3 v1.26.8
+package bundled with buildroot. The urllib3 requirements for requests v2.27.1
+is urllib3>=1.21.1,<1.27 .
+
+Set the lower limit for urllib3 to >1.24.2 to satisfy the comment regarding
+CVE-2019-11324.
+
+Remove the importlib-resources>=4.1.1 requirement. The features of
+importlib-resources v5.0 (and thus v4.1.1) have been merged into the
+CPython 3.10 bundled with buildroot.
+
+Remove the u-msgpack-python requirement, which is an indirect dependency via
+autobahn[serialization] that is not needed due to the python-msgpack package
+being chosen instead on CPython.
+
+Remove the netaddr requirement, which is an indirect dependency via
+autobahn[xbr]->web3. buildroot's python-autobahn package currently does not
+support the autobahn[xbr] extras.
+
+Signed-off-by: Emile Cormier <emile.cormier.jr@gmail.com>
+
+--- a/requirements-min.txt
++++ b/requirements-min.txt
+@@ -8,13 +8,11 @@ colorama>=0.4.4
+ constantly>=15.1.0
+ cryptography>=2.6.1
+ h2>=3.2.0
+-idna<2.6,>=2.5
+-importlib-resources>=4.1.1
++idna>=2.5
+ incremental>=17.5.0
+ jinja2>=2.10.1
+ lmdb>=0.92
+ mistune>=0.7.4
+-netaddr>=0.7.19
+ passlib>=1.7.1
+ priority>=1.3.0
+ psutil>=5.2.2
+@@ -37,10 +35,9 @@ twisted[tls,conch,http2,osx_platform]>=2
+ twisted[tls,conch,http2,windows_platform]>=20.3.0; sys_platform == 'win32'
+ txaio>=21.2.1
+ txtorcon>=20.0.0
+-u-msgpack-python>=2.4.1
+ # urllib3 is an indirect dependency, but we force a recent version because of https://nvd.nist.gov/vuln/detail/CVE-2019-11324
+ # workaround for version conflict in requests vs sth else:
+-urllib3<1.25,>=1.21.1
++urllib3>1.24.2
+ vmprof>=0.4.12; platform_machine=='x86_64' or platform_machine=='i386' or platform_machine=='arm'
+ watchdog>=0.8.3
+ werkzeug>=0.14.1
